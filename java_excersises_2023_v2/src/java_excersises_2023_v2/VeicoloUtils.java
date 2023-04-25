@@ -44,33 +44,33 @@ public class VeicoloUtils implements StreamUtiles{
 	 *@param consumer the consumer to apply to each {@link Veicolo} object in the list
 	 **/
 	public void applyConsumer(List<Veicolo> list, Consumer<Veicolo> consumer) {
+		
+
 		//Iterate over every vehicle in the list and apply the consumer
-		for (Veicolo veicolo : list) {
-			consumer.accept(veicolo);
-			
-		}			
+		list.parallelStream().forEach(consumer);	
+
 	}
 
 	/**
 	 * Filters the given List of {@link Veicolo} objects using the
 	 * specified {@link Predicate},
 	 * and prints out the brand and power of each resulting {@link Veicolo}
-	 * object.
+	 * object. Also imlements parallelStream for multithreading.
 	 * 
 	 * @param list the list of {@link Veicolo} objects to filter
 	 * @param predicate the predicate used to filter the list
 	 **/
 	public void applyPredicate(List<Veicolo> list, Predicate<Veicolo> predicate) {
-		//Apply the Predicate on a stream of Veicolo, 
+		//Apply the Predicate on a paralstream of Veicolo, 
 		//filters the stream based on the given Predicate and then prints out the results for each object using a lambda expression.
-		list.stream()
+		list.parallelStream()
 	    .filter(predicate)
 	    .forEach(veicolo -> System.out.println(
-	        veicolo.getMarca() + " is powerful: " + veicolo.getPotenza()
+	        veicolo.getMarca() + " is powerful: " + veicolo.getPotenza() + " (predicate)"
 	    ));
 		
+		
 	}
-
 	
 	/**
 	 * Maps the specified {@link Function} to each {@link Veicolo} object in the
@@ -85,10 +85,9 @@ public class VeicoloUtils implements StreamUtiles{
 		//apply the given Function on each element of the input list of Veicolo
 		//objects and print the result to the console using the forEach() method.
 		list
-		.stream()
-		.map(function)
+		.parallelStream()
+		.map(function.andThen(result -> result + " (function)"))
 		.forEach(System.out::println);
-		
 	}
 
 	/**
