@@ -1,13 +1,24 @@
 package string_manipulation;
 
+import java.util.Scanner;
+
 public class Main {
 
 	public static void main(String[] args) {
 
-		Utils utils = Utils.getInstance();
+		Scanner scanner = new Scanner(System.in);
 
-		System.out.println(utils.modifyStringRegex());
+		String input = Utils.takeInput(scanner);
 
+		String separator = Utils.takeSeparator(scanner);
+
+		int[] sortedList = Utils.sortString(input, separator);
+
+		for (int i : sortedList) {
+			System.out.println(i);
+		}
+
+		scanner.close();
 	}
 
 }

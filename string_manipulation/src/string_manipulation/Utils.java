@@ -1,42 +1,41 @@
 package string_manipulation;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
-public class Utils implements StringUtils {
-
-	private static Utils instance;
+public final class Utils {
 
 	private Utils() {
-	}
+	};
 
-	static Utils getInstance() {
-		if (instance == null) {
-			instance = new Utils();
-		}
-		return instance;
-	}
-
-	public String modifyStringSeparator() {
-		Scanner scanner = new Scanner(System.in);
+	public static String takeInput(Scanner scanner) {
 		System.out.println("Enter string to be modified: ");
 		String input = scanner.nextLine();
-		System.out.println("Enter the separator: ");
+		return input;
+	}
+
+	public static String takeSeparator(Scanner scanner) {
+		System.out.println("Enter separator: ");
 		String separator = scanner.nextLine();
-		String[] parts = input.split(separator);
-		String output = String.join("", parts);
-		scanner.close();
-		return "Result: " + output;
+		return separator;
 	}
 
-	public String modifyStringRegex() {
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Enter string to be modified: ");
-		String input = scanner.nextLine();
-		System.out.println("Enter the separator Regex: ");
-		String regex = scanner.nextLine();
-		String output = input.replaceAll(regex, "");
-		scanner.close();
-		return "Result: " + output;
-	}
+	public static int[] sortString(String input, String separator) {
 
+		//split string into an array using the separator
+		String[] parts = input.split(separator); 
+
+		//create an empty int array same size as string array
+		int[] numbers = new int[parts.length];
+
+		//parse data from the string array to an int deleting every non numercal character
+		for (int i = 0; i < parts.length; i++) {
+			numbers[i] = Integer.parseInt(parts[i].replaceAll("[^0-9]", ""));
+		}
+
+		Arrays.sort(numbers);
+
+		return numbers;
+
+	}
 }
